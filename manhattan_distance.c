@@ -67,6 +67,14 @@ void		find_final(t_all *find, t_oken *head)
 	int			dst;
 
 	write(find->fd, "find final\n", 11);
+	
+	if (head == NULL)
+	{
+		write(find->fd, "here?\n", 6);
+		find->res_x = 0;
+		find->res_y = 0;
+		return ;
+	}
 	dst = head->dist;
 	tmp = head;
 	find->res_x = head->x;
