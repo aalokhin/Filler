@@ -24,33 +24,42 @@ int				modul(int a1, int a2)
 	return (ret);
 }
 
-int				manhattan_dist_min(int x, int y, t_enem *enemy)
+void			check_distance(t_oken *head, t_all *find)
 {
-	int			min;
-	int			tmp;
-	t_enem		*node;
+	int			res;
 
-	node = enemy;
-	tmp = modul(x, enemy->x) + modul(y, enemy->y);
-	min = tmp;
-	while (node != NULL)
+	res = modul(head->x, find->x) + modul(head->y, find->y);
+	if (find->dst == -1 || (find->dst != -1 && res < find->dst))
 	{
-		tmp = modul(x, enemy->x) + modul(y, enemy->y);
-		min = (tmp < min) ? tmp : min;
-		node = node->next;
+		find->dst = res;
+		find->res_x = head->x;
+		find->res_y = head->y;
 	}
-	return (min);
 }
 
-void			calculate_distance(t_enem *enemy, t_oken **head)
+void			ft_filler(t_all *find)
 {
-	t_oken		*tmp;
+	t_oken		*head;
 
-	tmp = (*head);
-	while ((*head) != NULL)
+	find->y = 0;
+	head = NULL;
+	while (find->y < find->map_h)
 	{
-		(*head)->dist = manhattan_dist_min((*head)->x, (*head)->y, enemy);
-		(*head) = (*head)->next;
+		find->x = 0;
+		while (find->x < find->map_w)
+		{
+			if (check_placement(find) == 1)
+			{
+				if (head == NULL)
+					head = create_list(find);
+				else
+					add(&head, find);
+			}
+			find->x++;
+		}
+		find->y++;
 	}
-	*head = tmp;
+	find_final(find, head);
+	delete_list(&head);
+	print_coord(find);
 }

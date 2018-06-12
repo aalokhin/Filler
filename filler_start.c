@@ -27,6 +27,7 @@ void			find_map_size(t_all *find, char *line)
 	find->map_w = ft_atoi(&line[i]);
 	i = 0;
 	get_next_line(0, &line);
+	ft_strdel(&line);
 	find->map = (char**)malloc(sizeof(char*) * (find->map_h + 1));
 	while (i < find->map_h)
 	{
@@ -39,6 +40,7 @@ void			find_map_size(t_all *find, char *line)
 	get_next_line(0, &line);
 	if (line && !ft_strncmp(line, "Piece ", 6))
 		find_chnk_size(find, line);
+	ft_strdel(&line);
 }
 
 void			find_chnk_size(t_all *find, char *line)

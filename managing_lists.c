@@ -31,36 +31,46 @@ t_oken		*create_list(t_all *find)
 void		add(t_oken **head, t_all *find)
 {
 	t_oken		*new;
+	t_oken		*last;
 
 	new = create_list(find);
 	if (!new || !head)
 		return ;
-	new->next = *head;
-	*head = new;
-}
-
-t_enem		*enem_list(int x, int y)
-{
-	t_enem	*head;
-
-	if (!(head = (t_enem*)malloc(sizeof(t_enem))))
-		return (NULL);
-	else
+	last = *head;
+	new->next = NULL;
+	if (*head == NULL)
 	{
-		head->x = x;
-		head->y = y;
+		*head = new;
+		return ;
 	}
-	head->next = NULL;
-	return (head);
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
 }
 
-void		enem_add(t_enem **head, int x, int y)
+void		delete_list(t_oken **head)
 {
-	t_enem		*new;
+	t_oken *cur;
+	t_oken *next;
+	int fd = open("ftest", O_RDWR);
 
-	new = enem_list(x, y);
-	if (!new || !head)
+	if(!head)
 		return ;
-	new->next = *head;
-	*head = new;
+	cur = *head;
+	while (cur != NULL)
+	{
+		 	write(fd, "free x y\n", 9);
+			ft_putnbr_fd(cur->x, fd);
+			write(fd, " ", 1);
+			ft_putnbr_fd(cur->y, fd);
+			write(fd, "\n", 1);
+
+		next = cur->next;
+		cur->x = 0;
+		cur->y = 0;
+		cur->dist = 0;
+		free(cur);
+		cur = next;
+	}
+	*head = NULL;
 }
