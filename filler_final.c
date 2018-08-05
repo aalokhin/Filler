@@ -54,18 +54,21 @@ void		ft_free_struct(t_all *find)
 	int		i;
 
 	i = 0;
-	while(i < find->map_h)
+	while (i < find->map_h)
 	{
 		ft_strdel(&find->map[i]);
 		i++;
 	}
 	i = 0;
-	while(i < find->chnk_h)
+	while (i < find->chnk_h)
 	{
 		ft_strdel(&find->chnk[i]);
 		i++;
 	}
-	ft_bzero(&find, sizeof(find));
+	free(find->chnk);
+	free(find->map);
+	find->chnk = NULL;
+	find->map = NULL;
 }
 
 void		print_coord(t_all *find)
@@ -74,7 +77,4 @@ void		print_coord(t_all *find)
 	write(1, " ", 1);
 	ft_putnbr_fd(find->res_x, 1);
 	write(1, "\n", 1);
-	ft_free_struct(find);
-	
-	//while(1);
 }

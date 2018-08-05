@@ -12,57 +12,62 @@
 
 #include "filler.h"
 
-void			find_map_size(t_all *find, char *line)
+void			find_dimensions(t_all *find, char **line, int i)
+{
+	while (!ft_isdigit((*line)[i]))
+		i++;
+	find->map_h = ft_atoi(&(*line)[i]);
+	while (ft_isdigit((*line)[i]))
+		i++;
+	while (!ft_isdigit((*line)[i]))
+		i++;
+	find->map_w = ft_atoi(&(*line)[i]);
+}
+
+void			find_map_size(t_all *find, char **line)
 {
 	int			i;
 
 	i = 0;
-	while (!ft_isdigit(line[i]))
-		i++;
-	find->map_h = ft_atoi(&line[i]);
-	while (ft_isdigit(line[i]))
-		i++;
-	while (!ft_isdigit(line[i]))
-		i++;
-	find->map_w = ft_atoi(&line[i]);
-	i = 0;
-	get_next_line(0, &line);
-	ft_strdel(&line);
+	find_dimensions(find, line, i);
+	ft_strdel(line);
+	get_next_line(0, line);
+	ft_strdel(line);
 	find->map = (char**)malloc(sizeof(char*) * (find->map_h + 1));
 	while (i < find->map_h)
 	{
-		get_next_line(0, &line);
-		find->map[i] = ft_strdup(line + 4);
-		ft_strdel(&line);
+		get_next_line(0, line);
+		find->map[i] = ft_strdup(&(*line)[4]);
+		ft_strdel(line);
 		i++;
 	}
 	find->map[i] = NULL;
-	get_next_line(0, &line);
-	if (line && !ft_strncmp(line, "Piece ", 6))
+	get_next_line(0, line);
+	if (line && !ft_strncmp((*line), "Piece ", 6))
 		find_chnk_size(find, line);
-	ft_strdel(&line);
 }
 
-void			find_chnk_size(t_all *find, char *line)
+void			find_chnk_size(t_all *find, char **line)
 {
 	int			i;
 
 	i = 0;
-	while (!ft_isdigit(line[i]))
+	while (!ft_isdigit((*line)[i]))
 		i++;
-	find->chnk_h = ft_atoi(&line[i]);
-	while (ft_isdigit(line[i]))
+	find->chnk_h = ft_atoi(&((*line))[i]);
+	while (ft_isdigit((*line)[i]))
 		i++;
-	while (!ft_isdigit(line[i]))
+	while (!ft_isdigit((*line)[i]))
 		i++;
-	find->chnk_w = ft_atoi(&line[i]);
+	find->chnk_w = ft_atoi(&(*line)[i]);
+	ft_strdel(line);
 	i = 0;
 	find->chnk = (char**)malloc(sizeof(char*) * (find->chnk_h + 1));
 	while (i < find->chnk_h)
 	{
-		get_next_line(0, &line);
-		find->chnk[i] = ft_strdup(line);
-		ft_strdel(&line);
+		get_next_line(0, &(*line));
+		find->chnk[i] = ft_strdup((*line));
+		ft_strdel(line);
 		i++;
 	}
 	find->chnk[i] = NULL;
@@ -94,8 +99,9 @@ int				main(void)
 	{
 		if (line && !ft_strncmp(line, "$$$ exec p", 10))
 			find_me(&find, line);
-		if (line && !ft_strncmp(line, "Plateau ", 8))
-			find_map_size(&find, line);
+		else if (line && !ft_strncmp(line, "Plateau ", 8))
+			find_map_size(&find, &line);
+		ft_free_struct(&find);
 		ft_strdel(&line);
 	}
 	return (0);

@@ -60,6 +60,6 @@ void			ft_filler(t_all *find)
 		find->y++;
 	}
 	find_final(find, head);
-	delete_list(&head);
+	delete_list(head);
 	print_coord(find);
 }

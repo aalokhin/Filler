@@ -48,29 +48,19 @@ void		add(t_oken **head, t_all *find)
 	last->next = new;
 }
 
-void		delete_list(t_oken **head)
+void		delete_list(t_oken *head)
 {
-	t_oken *cur;
 	t_oken *next;
-	int fd = open("ftest", O_RDWR);
 
-	if(!head)
+	if (!head)
 		return ;
-	cur = *head;
-	while (cur != NULL)
+	while (head != NULL)
 	{
-		 	write(fd, "free x y\n", 9);
-			ft_putnbr_fd(cur->x, fd);
-			write(fd, " ", 1);
-			ft_putnbr_fd(cur->y, fd);
-			write(fd, "\n", 1);
-
-		next = cur->next;
-		cur->x = 0;
-		cur->y = 0;
-		cur->dist = 0;
-		free(cur);
-		cur = next;
+		next = head->next;
+		head->x = 0;
+		head->y = 0;
+		head->dist = 0;
+		free(head);
+		head = next;
 	}
-	*head = NULL;
 }

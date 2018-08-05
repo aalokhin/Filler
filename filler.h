@@ -51,7 +51,7 @@ typedef struct		s_chk
 }					t_chk;
 
 void				ft_free_struct(t_all *find);
-
+void				find_dimensions(t_all *find, char **line, int i);
 int					fit_in(t_all *find);
 int					locate_enemy(t_all *find);
 int					verify(char c, t_all *find);
@@ -59,12 +59,17 @@ void				check_distance(t_oken *head, t_all *find);
 int					modul(int a1, int a2);
 void				find_final(t_all *find, t_oken *head);
 t_oken				*create_list(t_all *find);
-void				delete_list(t_oken **head);
+
+void				delete_list(t_oken *head);
+
 void				add(t_oken **head, t_all *find);
 void				find_me(t_all *find, char *line);
-void				find_map_size(t_all *find, char *line);
+
+void				find_map_size(t_all *find, char **line);
 void				print_coord(t_all *find);
-void				find_chnk_size(t_all *find, char *line);
+
+void				find_chnk_size(t_all *find, char **line);
+
 int					check_placement(t_all *find);
 void				ft_filler(t_all *find);
 

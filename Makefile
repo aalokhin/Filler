@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkravets <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: aalokhin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/02/13 11:58:28 by vkravets          #+#    #+#              #
-#    Updated: 2018/02/13 11:58:30 by vkravets         ###   ########.fr        #
+#    Created: 2018/06/14 12:47:15 by aalokhin          #+#    #+#              #
+#    Updated: 2018/06/14 12:47:19 by aalokhin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = aalokhin.filler
 
-F =  -Wall -Wextra
-#-Werror
+F =  -Wall -Wextra -Werror
 
 O := $(patsubst %.c,%.o,$(wildcard ./*.c))
 
