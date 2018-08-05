@@ -16,15 +16,14 @@ char		*reallocate(char *savein, char *temp, int symb)
 {
 	t_j				rlc;
 
-	rlc.c1 = 0;
-	rlc.c2 = 0;
-	rlc.i = 0;
+	ft_bzero(&rlc, sizeof(rlc));
 	if (savein == NULL)
 		(rlc.res) = ft_strdup(temp);
 	else
 	{
 		rlc.l = ft_strlen(savein);
-		(rlc.res) = ft_strnew(symb + rlc.l);
+		rlc.res = ft_strnew(symb + rlc.l);
+		(rlc.res)[symb + rlc.l] = '\0';
 		while ((rlc.c1) < (symb + rlc.l))
 		{
 			if (savein[rlc.i] != '\0')
@@ -33,7 +32,6 @@ char		*reallocate(char *savein, char *temp, int symb)
 				(rlc.res)[(rlc.c1)] = temp[rlc.c2++];
 			(rlc.c1)++;
 		}
-		(rlc.res)[(rlc.c1)] = '\0';
 	}
 	ft_strdel(&savein);
 	return ((rlc.res));
@@ -99,10 +97,6 @@ int			kos(t_h *gnl, const int *fd, char **line)
 	|| ((*gnl).si)[0] == '\0'))
 		return (0);
 	*line = the_line(((*gnl).si), &(*gnl).c);
-	if (((*gnl).si)[(*gnl).c] != 0 && ((*gnl).si)[(*gnl).c + 1] != 0)
-		((*gnl).j->content) = (void*)(ft_strdup(&(((*gnl).si)[(*gnl).c + 1])));
-	else
-		((*gnl).j->content) = (void*)(ft_strdup("\0"));
 	ft_strdel(&((*gnl).si));
 	return (1);
 }
